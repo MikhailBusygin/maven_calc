@@ -40,9 +40,9 @@ public class CalculationTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void shuffleListExpressionTest() throws IllegalArgumentException {
+    public void shuffleListExpressionTest() throws NotValidExpressionException {
         if (value.equals(Arrays.asList("789", "0", "/"))) {
-            thrown.expect(IllegalArgumentException.class);
+            thrown.expect(NotValidExpressionException.class);
             thrown.expectMessage("Делить на ноль нельзя!");
         }
         Calculation expressionC = new Calculation(new ArrayList<>(value));

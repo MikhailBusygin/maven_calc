@@ -3,7 +3,7 @@ package ru.Busygin.Mikhail;
 import java.util.Scanner;
 
 public class App {
-    public static void main(String [] args) throws IllegalArgumentException, NotValidException {
+    public static void main(String [] args) throws NotValidExpressionException {
         //Выполнение запроса на ввод выражения и его проверка на валидность в цикле
         ValidExpression validExpression = new ValidExpression(new Console(new Scanner(System.in)));
 

@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Console {
 
-    public String inExpression;
+    public String expression;
 
     public Console (Scanner sc) {
-        this.inExpression = sc.nextLine().replaceAll(" ", "");
+        this.expression = sc.nextLine().replaceAll(" ", "");
     }
 }

@@ -18,21 +18,21 @@ public class ValidExpressionTest {
     public final ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void checkedWrongSymbolsTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
-        thrown.expectMessage("Содержит посторонние символы или не содержит ничего, введите заного");
+    public void checkedWrongSymbolsTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
+        thrown.expectMessage("Содержит посторонние символы или не содержит ничего, введите заново");
         new ValidExpression(new Console(new Scanner("aAzZ?")));
     }
 
     @Test
-    public void validSymbolsTest() throws NotValidException {
+    public void validSymbolsTest() throws NotValidExpressionException {
         List<String> ex = Arrays.asList("1", "2", "+", "(", "3", "4", "-", "5", "6", ")", "*", "7", "8", "/", "9", "0");
         ValidExpression validEx = new ValidExpression(new Console(new Scanner("12 + (34 - 56) * 78 / 90")));
         assertThat(ex, equalTo(validEx.someExpressionArray));
     }
 
     @Test
-    public void countParenthesesTest() throws NotValidException {
+    public void countParenthesesTest() throws NotValidExpressionException {
         ValidExpression expressionA = new ValidExpression(new Console(new Scanner("((1 + 2) * 2)")));
         ValidExpression expressionB = new ValidExpression(new Console(new Scanner("(12 / (4 - 2))")));
         ValidExpression expressionC = new ValidExpression(new Console(new Scanner("(2 + (4 - 2) * 2)")));
@@ -43,50 +43,50 @@ public class ValidExpressionTest {
     }
 
     @Test
-    public void openCountParenthesesTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void openCountParenthesesTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Не все скобки открыты");
         new ValidExpression(new Console(new Scanner("1)")));
     }
 
     @Test
-    public void closeCountParenthesesTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void closeCountParenthesesTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Не все скобки закрыты");
         new ValidExpression(new Console(new Scanner("(1")));
     }
 
     @Test
-    public void correctStartEndTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void correctStartEndTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Некорректное местоположение знаков операций или разделительного знака");
         new ValidExpression(new Console(new Scanner("-2")));
     }
 
     @Test
-    public void doubleCorrectExpressionTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void doubleCorrectExpressionTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Между знаками операций нет чисел");
         new ValidExpression(new Console(new Scanner("2++2")));
     }
 
     @Test
-    public void negativeNumberTest() throws NotValidException {
+    public void negativeNumberTest() throws NotValidExpressionException {
         List<String> ex = Arrays.asList("(", "0", "-", "2", ")");
         ValidExpression validEx = new ValidExpression(new Console(new Scanner("( - 2 )")));
         assertThat(ex, equalTo(validEx.someExpressionArray));
     }
 
     @Test
-    public void parenthesesCorrectExpressionTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void parenthesesCorrectExpressionTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Недопустимое расположение скобок");
         new ValidExpression(new Console(new Scanner("2()2")));
     }
 
     @Test
-    public void correctNumbersTest() throws NotValidException {
-        thrown.expect(NotValidException.class);
+    public void correctNumbersTest() throws NotValidExpressionException {
+        thrown.expect(NotValidExpressionException.class);
         thrown.expectMessage("Некорректные числа в выражении, или их местоположение");
         new ValidExpression(new Console(new Scanner("2.2.2")));
     }

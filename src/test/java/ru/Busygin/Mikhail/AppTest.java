@@ -27,25 +27,17 @@ public class AppTest {
         System.setOut(new PrintStream(testOut));
     }
 
-    private void provideInput(String data) {
-        testIn = new ByteArrayInputStream(data.getBytes());
-        System.setIn(testIn);
-    }
-
-    private String getOutput() {
-        return testOut.toString();
+    @Test
+    public void mainTest() throws NotValidExpressionException {
+        String data = "2 * (4 - 3) - (3 + 2) / 5 + 5 * ((10 - 5) * 5) / 25 - 5 + 2 * 2 / 4";
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+        main(new String[]{});
+        assertThat("2.0\r\n", equalTo(testOut.toString()));
     }
 
     @After
     public void restoreSystemInputOutput() {
-        System.setIn(systemIn);
-        System.setOut(systemOut);
-    }
-
-    @Test
-    public void mainTest() throws IllegalArgumentException, NotValidException {
-        provideInput("2 * (4 - 3) - (3 + 2) / 5 + 5 * ((10 - 5) * 5) / 25 - 5 + 2 * 2 / 4");
-        main(new String[]{});
-        assertThat("2.0\r\n", equalTo(getOutput()));
+        System.setIn(System.in);
+        System.setOut(System.out);
     }
 }

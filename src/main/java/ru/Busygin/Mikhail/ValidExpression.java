@@ -16,8 +16,8 @@ public class ValidExpression {
     private String someExpression; //входная строка
     public List<String> someExpressionArray; //выходная строка в виде коллекции
 
-    public ValidExpression(Console console) throws NotValidException {
-        this.someExpression = console.inExpression;
+    public ValidExpression(Console console) throws NotValidExpressionException {
+        this.someExpression = console.expression;
         setOptions();
         checkedWrongSymbols();
         countParentheses();
@@ -45,14 +45,14 @@ public class ValidExpression {
         }
     }
 
-    public void checkedWrongSymbols() throws NotValidException {
+    public void checkedWrongSymbols() throws NotValidExpressionException {
         someExpressionArray = Arrays.asList(someExpression.split(""));
         if (!someExpressionArray.stream().allMatch(n -> n.matches(regexExpression))) {
-            throw new NotValidException("Содержит посторонние символы или не содержит ничего, введите заного");
+            throw new NotValidExpressionException("Содержит посторонние символы или не содержит ничего, введите заново");
         }
     }
 
-    public void countParentheses() throws NotValidException {
+    public void countParentheses() throws NotValidExpressionException {
         int openParentheses = 0;
         int closeParentheses = 0;
         for (String symbol : someExpressionArray) {
@@ -63,25 +63,25 @@ public class ValidExpression {
                 closeParentheses++;
             }
             if (openParentheses < closeParentheses) {
-                throw new NotValidException("Не все скобки открыты");
+                throw new NotValidExpressionException("Не все скобки открыты");
             }
         }
         if (openParentheses == closeParentheses) {
             parentheses = openParentheses;
         } else {
-            throw new NotValidException("Не все скобки закрыты");
+            throw new NotValidExpressionException("Не все скобки закрыты");
         }
     }
 
-    public void correctStartEnd() throws NotValidException {
+    public void correctStartEnd() throws NotValidExpressionException {
         for (String singleOperation : singleOperations) {
             if (someExpression.startsWith(singleOperation) || someExpression.endsWith(singleOperation)) {
-                throw new NotValidException("Некорректное местоположение знаков операций или разделительного знака");
+                throw new NotValidExpressionException("Некорректное местоположение знаков операций или разделительного знака");
             }
         }
     }
 
-    public void correctExpression() throws NotValidException {
+    public void correctExpression() throws NotValidExpressionException {
         int sizeExpression = someExpressionArray.size() - 1;
         for (int i = 0; i < sizeExpression; i ++) {
             String negativeCaseArrayExpression = someExpressionArray.get(i) + someExpressionArray.get(i + 1);
@@ -95,22 +95,22 @@ public class ValidExpression {
             String caseArrayExpression = someExpressionArray.get(i) + someExpressionArray.get(i + 1);
             for (String symbolsEx : cases) {
                 if ((caseArrayExpression).equals(symbolsEx)) {
-                    throw new NotValidException("Между знаками операций нет чисел");
+                    throw new NotValidExpressionException("Между знаками операций нет чисел");
                 }
             }
             for (String parenthesesCases : addParentheses) {
                 if ((caseArrayExpression).equals(parenthesesCases)) {
-                    throw new NotValidException("Недопустимое расположение скобок");
+                    throw new NotValidExpressionException("Недопустимое расположение скобок");
                 }
             }
         }
     }
 
-    public void correctNumbers() throws NotValidException {
+    public void correctNumbers() throws NotValidExpressionException {
         String[] wrongNumbers = someExpression.split("\\d+");
         for (int i = 0; i < wrongNumbers.length - 1; i++) {
             if (wrongNumbers[i].equals(".") && wrongNumbers[i + 1].equals(".")) {
-                throw new NotValidException("Некорректные числа в выражении, или их местоположение");
+                throw new NotValidExpressionException("Некорректные числа в выражении, или их местоположение");
             }
         }
     }

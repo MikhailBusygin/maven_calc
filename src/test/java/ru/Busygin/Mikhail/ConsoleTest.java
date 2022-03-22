@@ -10,8 +10,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ConsoleTest {
 
     @Test
-    public void addExpressionTest() {
-        assertThat("aAzZ1234567890+-*/.?",
-                equalTo(new Console(new Scanner("aAzZ1234567890+-*/.?")).inExpression));
+    public void getExpressionTest() {
+        assertThat("aAzZ1234567890+-*/.",
+                equalTo(new Console(new Scanner("aAzZ1234567890+-*/.")).expression));
     }
 }
