@@ -12,7 +12,7 @@ public class Calculation {
         this.listExpression = ex;
     }
 
-    public String shuffleListExpression() throws NotValidExpressionException {
+    public String shuffleListExpression() throws IllegalArgumentException {
         List<String> listCalculate = new ArrayList<>();
         int firstExpression;
         do {
@@ -38,7 +38,7 @@ public class Calculation {
         }
     }
 
-    public String countOperation(String operation) throws NotValidExpressionException {
+    public String countOperation(String operation) throws IllegalArgumentException {
         switch (operation) {
             case "+":
                 try {
@@ -77,7 +77,7 @@ public class Calculation {
                                     Float.parseFloat(listExpression.get(indexCalculate + 1));
                     indexCalculate = indexCalculate + 2;
                     if (Float.isInfinite(div)) {
-                        throw new NotValidExpressionException("Делить на ноль нельзя!");
+                        throw new IllegalArgumentException("Делить на ноль нельзя!");
                     }
                     return String.valueOf(div);
                 } catch (NumberFormatException nfExpr) {
